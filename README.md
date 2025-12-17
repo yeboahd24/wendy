@@ -90,6 +90,7 @@ This project can be easily deployed to:
 
 - **Netlify**: Connect your Git repository and deploy automatically
 - **Vercel**: Import your repository and deploy with zero configuration
+- **Render**: Deploy with the included `render.yaml` configuration
 - **GitHub Pages**: Use the `gh-pages` package to deploy the `dist` folder
 
 ### Deploy to Netlify
@@ -100,6 +101,20 @@ This project can be easily deployed to:
 4. Connect your repository
 5. Build command: `npm run build`
 6. Publish directory: `dist`
+
+### Deploy to Render
+
+1. Push your code to GitHub
+2. Go to [Render](https://render.com/)
+3. Click "New" → "Web Service"
+4. Connect your repository
+5. Render will automatically detect the `render.yaml` file
+6. Click "Create Web Service"
+
+**Or configure manually:**
+- Build Command: `npm install && npm run build`
+- Start Command: `npm start`
+- Environment: Node
 
 ## 📝 Customization
 
