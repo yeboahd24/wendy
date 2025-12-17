@@ -29,17 +29,27 @@ const Contact = () => {
       const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
       const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
-      await emailjs.send(
+      // Check if environment variables are loaded
+      if (!serviceId || !templateId || !publicKey) {
+        throw new Error('EmailJS configuration is missing. Please check your .env file.');
+      }
+
+      // Send email using EmailJS
+      // Template parameters should match your EmailJS template variables
+      const templateParams = {
+        to_name: formData.name,
+        message: formData.message,
+        user_name: 'Wendy AB Boateng'
+      };
+
+      const response = await emailjs.send(
         serviceId,
         templateId,
-        {
-          from_name: formData.name,
-          from_email: formData.email,
-          message: formData.message,
-          to_name: 'Wendy AB Boateng'
-        },
+        templateParams,
         publicKey
       );
+
+      console.log('EmailJS Response:', response);
 
       setStatus({
         type: 'success',
@@ -47,9 +57,10 @@ const Contact = () => {
       });
       setFormData({ name: '', email: '', message: '' });
     } catch (error) {
+      console.error('EmailJS Error:', error);
       setStatus({
         type: 'error',
-        message: 'Oops! Something went wrong. Please try again or contact me directly.'
+        message: error.text || 'Oops! Something went wrong. Please try again or contact me directly.'
       });
     } finally {
       setIsSubmitting(false);
